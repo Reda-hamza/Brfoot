@@ -211,7 +211,7 @@ def generate_lineup_image(team_a: list, team_b: list,
 class TeamGenerator:
     def __init__(self):
         self.creds_file     = 'votre_cle_api.json'
-        self.spreadsheet_id = "1hmh78_Ow1C2M4fLjzHNRpXV5hLG-prqAqqTX50bcQyg"
+        self.spreadsheet_id = st.secrets["gcp_service_account"]
         self.client         = None
         self.notes_dict     = {}
         self.linked_players = []
@@ -338,8 +338,9 @@ class TeamGenerator:
 
     async def send_to_telegram(self, teams_data: dict, user_name: str,
                                 img_bytes: bytes = None) -> bool:
-        bot_token = "8309020838:AAG1tdmjp3BQbRqMNwQ4HSXHUS75NHXiMBU"
-        chat_id   = "-1003162804597"
+        bot_token = st.secrets["TELEGRAM_BOT_TOKEN"]
+        chat_id   = st.secrets["TELEGRAM_CHAT_ID"]
+                                    
         try:
             bot = Bot(token=bot_token)
             # Texte brut uniquement — pas de parse_mode pour éviter les erreurs
